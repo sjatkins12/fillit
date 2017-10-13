@@ -16,90 +16,83 @@ int	main(void)
 	float		longest;
 	int			num_tests;
 
-	num_tetriminos = 10;
+	num_tetriminos = 7;
 	t = (t_tetrimino *)malloc(sizeof(t_tetrimino) * num_tetriminos);
 	if (!t)
 		return (0);
 	start = t;
 
-	// ft_strcpy(t->grid[0], "....");
-	// ft_strcpy(t->grid[1], ".###");
-	// ft_strcpy(t->grid[2], "...#");
-	// ft_strcpy(t->grid[3], "....");
-	// t->num = 'A';
-	// t->xdim = 3;
-	// t->ydim = 2;
-	// t->next = NULL;
-	// t++;
-	for(int i = 0; i < num_tetriminos; i++)
-	{
-		ft_strcpy(t->grid[0], "....");
-		ft_strcpy(t->grid[1], "..##");
-		ft_strcpy(t->grid[2], "..##");
-		ft_strcpy(t->grid[3], "....");
-		// ft_strcpy(t->grid[0], "...#");
-		// ft_strcpy(t->grid[1], "...#");
-		// ft_strcpy(t->grid[2], "...#");
-		// ft_strcpy(t->grid[3], "...#");
-		t->num = 'A' + i;
-		t->xdim = 2;
-		t->ydim = 2;
-		t->type = 's';
-		t->next = t + 1;
-		t++;
-	}
-	t--;
-	t->next = NULL;
-	// ft_strcpy(t->grid[0], ".#..");
-	// ft_strcpy(t->grid[1], ".##.");
-	// ft_strcpy(t->grid[2], ".#..");
-	// ft_strcpy(t->grid[3], "....");
-	// t->num = 'C';
-	// t->xdim = 2;
-	// t->ydim = 3;
-	// t->next = t + 1;
-	// t++;
+	ft_strcpy(t->grid[0], "....");
+	ft_strcpy(t->grid[1], ".###");
+	ft_strcpy(t->grid[2], "...#");
+	ft_strcpy(t->grid[3], "....");
+	t->num = 'A';
+	t->xdim = 3;
+	t->ydim = 2;
+	t->next = t + 1;
+	t++;
 
-	// ft_strcpy(t->grid[0], "....");
-	// ft_strcpy(t->grid[1], "###.");
-	// ft_strcpy(t->grid[2], ".#..");
-	// ft_strcpy(t->grid[3], "....");
-	// t->num = 'D';
-	// t->xdim = 3;
-	// t->ydim = 2;
-	// t->next = t + 1;
-	// t++;
+	ft_strcpy(t->grid[0], "....");
+	ft_strcpy(t->grid[1], "..##");
+	ft_strcpy(t->grid[2], "..##");
+	ft_strcpy(t->grid[3], "....");
+	t->num = 'B';
+	t->xdim = 2;
+	t->ydim = 2;
+	t->type = 's';
+	t->next = t + 1;
+	t++;
+
+	ft_strcpy(t->grid[0], ".#..");
+	ft_strcpy(t->grid[1], ".##.");
+	ft_strcpy(t->grid[2], ".#..");
+	ft_strcpy(t->grid[3], "....");
+	t->num = 'C';
+	t->xdim = 2;
+	t->ydim = 3;
+	t->next = t + 1;
+	t++;
+
+	ft_strcpy(t->grid[0], "....");
+	ft_strcpy(t->grid[1], "###.");
+	ft_strcpy(t->grid[2], ".#..");
+	ft_strcpy(t->grid[3], "....");
+	t->num = 'D';
+	t->xdim = 3;
+	t->ydim = 2;
+	t->next = t + 1;
+	t++;
 	
-	// ft_strcpy(t->grid[0], "....");
-	// ft_strcpy(t->grid[1], ".###");
-	// ft_strcpy(t->grid[2], ".#..");
-	// ft_strcpy(t->grid[3], "....");
-	// t->num = 'E';
-	// t->xdim = 3;
-	// t->ydim = 2;
-	// t->next = t + 1;
-	// t++;
+	ft_strcpy(t->grid[0], "....");
+	ft_strcpy(t->grid[1], ".###");
+	ft_strcpy(t->grid[2], ".#..");
+	ft_strcpy(t->grid[3], "....");
+	t->num = 'E';
+	t->xdim = 3;
+	t->ydim = 2;
+	t->next = t + 1;
+	t++;
 
-	// ft_strcpy(t->grid[0], "...#");
-	// ft_strcpy(t->grid[1], "...#");
-	// ft_strcpy(t->grid[2], "...#");
-	// ft_strcpy(t->grid[3], "...#");
-	// t->num = 'F';
-	// t->type = 'i';
-	// t->xdim = 1;
-	// t->ydim = 4;
-	// t->next = t + 1;
-	// t++;
+	ft_strcpy(t->grid[0], "...#");
+	ft_strcpy(t->grid[1], "...#");
+	ft_strcpy(t->grid[2], "...#");
+	ft_strcpy(t->grid[3], "...#");
+	t->num = 'F';
+	t->type = 'i';
+	t->xdim = 1;
+	t->ydim = 4;
+	t->next = t + 1;
+	t++;
 
-	// ft_strcpy(t->grid[0], "....");
-	// ft_strcpy(t->grid[1], "..##");
-	// ft_strcpy(t->grid[2], ".##.");
-	// ft_strcpy(t->grid[3], "....");
-	// t->num = 'G';
-	// t->xdim = 2;
-	// t->ydim = 2;
-	// t->next = t + 1;
-	// t++;
+	ft_strcpy(t->grid[0], "....");
+	ft_strcpy(t->grid[1], ".##.");
+	ft_strcpy(t->grid[2], "..##");
+	ft_strcpy(t->grid[3], "....");
+	t->num = 'G';
+	t->xdim = 3;
+	t->ydim = 2;
+	t->next = NULL;
+	t++;
 
 	// ft_strcpy(t->grid[0], ".#..");
 	// ft_strcpy(t->grid[1], ".###");
@@ -174,7 +167,7 @@ int	main(void)
 
 
 	t = start;
-	num_tests = 1;
+	num_tests = 50;
 	j = 0;
 	shortest = -1;
 	average = 0;
