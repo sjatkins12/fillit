@@ -78,7 +78,8 @@ TEST_DEPEND = ft_alloc_answer_grid.c \
 			  ft_putendl.c \
 			  ft_strlen.c \
 			  ft_strcpy.c \
-			  main.c
+			  ft_strncpy.c \
+			  ft_io.c
 
 HEADER_FILES = includes
 

@@ -36,20 +36,15 @@ int			sp_check(char **grid, int y, int x, t_tetrimino t)
 	while (++i < 4 && (j = -1))
 	{
 		while (++j < 4)
-		{
-			
+		{	
 			if (t.grid[i][j] == '#')
 			{
-				if (ip == 5 && jp == 5)
+				if (ip == 5 && jp == 5) // Condition if jp and ip are not set. This is true only on the first occurence of '#'
 					set_start_num(&ip, &jp, i, j);
-				if (grid[y - ip + i][x + j - jp] != '.')
+				if (grid[y - ip + i][x + j - jp] != '.') // If the position, relative to the first occurence of '#' in the tetrimino grid, on the answer grid. If it is filled or if it is empty
 					return (0);
-
-
-				grid[y + i - ip][x + j - jp] = t.num;
+				grid[y + i - ip][x + j - jp] = t.num; //Fill that position
 			}
-
-
 		}
 	}
 	return (1);
@@ -63,7 +58,7 @@ void		restore_grid(char **grid, t_tetrimino t, int x, int y)
 
 	i = -1;
 	len = ft_strlen(grid[0]);
-	while (++i < t.ydim)
+	while (++i < t.ydim) // Iterates only through the square area of the tetrimino. It is impossible to have the tetrimino outside of these dimensions so no need to search there.
 	{
 		j = -1;
 		while (++j < t.xdim)
@@ -93,7 +88,6 @@ char		**ft_placeable(t_tetrimino *tetrimino,
 		{
 			if (grid[i][j] == '.' && sp_check(grid, i, j, *tetrimino) == 1) //evaluates the tetrimino and the answer grid. This determines if it can fit at this index.
 			{
-
 				// This block executes only if the tetrimino can fit
 				if (tetrimino->next) //Is this not the last tetrimino in the list
 					ft_placeable(tetrimino->next, grid, dimensions, placeable); //Recursively call this funciton with the next tetrimino in the linked list
@@ -102,8 +96,6 @@ char		**ft_placeable(t_tetrimino *tetrimino,
 				if (*placeable == 1) // Exit on success
 					return (grid); // Filled answer grid
 			}
-			else
-
 			restore_grid(grid, *tetrimino, j, i); //Answer grid could not be filled with the tetrimno at this index. Remove all characters of the current tetrimino from the answer grid. This does not nessasarly mean the tetrimino couldnt fit, it could also mean a tetrimino later in the linked list couldnt fit.
 		}
 	}

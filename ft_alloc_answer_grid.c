@@ -70,7 +70,7 @@ int			y_check(int consectutive, char **grid, int dimensions)
 
 int			room_check(t_tetrimino t, char **grid, int dimensions)
 {
-
+	//This function is to check for 2 things. If there are enough emtpy spaces to accomidate the tetrimino. and if there are enough consecutive empty spaces to theretically contain the tetrimino.
 	if (t.xdim >= t.ydim)
 		return (x_check(t.xdim, grid, dimensions));
 	else
