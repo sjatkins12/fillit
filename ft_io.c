@@ -1,7 +1,13 @@
 #include "header.h"
 #include <fcntl.h>
-#include <errno.h>
+
 void			check_tetrimino(t_tetrimino *t);
+
+void			error_handle()
+{
+	ft_putstr("error\n");
+	exit(0);
+}
 
 
 void			read_file(int fd, t_tetrimino *tetriminos)
@@ -21,18 +27,16 @@ void			read_file(int fd, t_tetrimino *tetriminos)
 		{
 			ret = read(fd, buffer, 5);
 			if (ret != 5 || buffer[4] != '\n')
-				exit(0); //Bad tetrimino
+				error_handle(); //Bad tetrimino
 			ft_strncpy(tetriminos->grid[i], buffer, 4);
 			tetriminos->grid[i][4] = '\0';
 		}
 		ret = read(fd, buffer, 1);
 		if (ret == 1 && buffer[0] != '\n')
-			exit(0);
+			error_handle();
 		tetriminos->num = 'A' + k;
 		check_tetrimino(tetriminos);
-		
-		hold = tetriminos;
-		tetriminos++;
+		hold = tetriminos++;
 		hold->next = tetriminos;
 		k++;
 	}
@@ -49,8 +53,7 @@ void			edge_check(char grid[4][5], int i, int j)
 		return ;
 	if (i < 3 && grid[i + 1][j] == '#')
 		return ;
-	exit(0);
-
+	error_handle();
 }
 
 void			type_check(int i, int j, t_tetrimino *t)
@@ -67,7 +70,7 @@ void			type_check(int i, int j, t_tetrimino *t)
 			t->grid[i][j + 1] == '#' && (t->type = 's'))
 			return ;
 		else
-			exit(0);
+			error_handle();
 	}
 	/*
 	#...
@@ -94,7 +97,7 @@ void			type_check(int i, int j, t_tetrimino *t)
 			return ;
 	}
 	if (j == 3 || i == 3)
-		exit(0);
+		error_handle();
 	
 	if (t->grid[i + 1][j + 1] == '#' && t->grid[i + 1][j] == '#' &&
 		t->grid[i][j + 1] == '#' && (t->type = 's'))
@@ -168,9 +171,7 @@ void			type_check(int i, int j, t_tetrimino *t)
 		t->grid[i + 1][j - 1] == '#' && t->grid[i + 1][j + 1] == '#') || (j > 1
 		&& t->grid[i + 1][j - 1] == '#' && t->grid[i + 1][j - 2] == '#')))
 		return ;
-	for (int k = 0; k < 4; k++)
-		printf("%s\n", t->grid[k]);
-	exit(0);	
+	error_handle();	
 }
 
 void			check_tetrimino(t_tetrimino *t)
@@ -192,6 +193,8 @@ void			check_tetrimino(t_tetrimino *t)
 		{
 			if (t->grid[i][j])
 			{
+				if (t->grid[i][j] != '#' && t->grid[i][j] != '.')
+					error_handle();
 				if (t->grid[i][j] == '#')
 				{
 					edge_check(t->grid, i, j);
@@ -211,29 +214,24 @@ void			check_tetrimino(t_tetrimino *t)
 		}
 	}
 	if (p_count != 4)
-		exit(0);
+		error_handle();
 }
 
 int				main(int argc, char **argv)
 {
 	int			fd;
-	// char		*full_str;
 	t_tetrimino	*tetriminos;
-	// int			curr_tetrimino;
 
 	if (argc != 2)
-		exit(0); // Give usage
+	{
+		ft_putstr("usage: fillit input_file\n");
+		exit(0);
+	}
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
-		exit(0); //Give usage
-
+		error_handle(); //Give usage
 	tetriminos = (t_tetrimino *)malloc(sizeof(t_tetrimino) * 26);
 	read_file(fd, tetriminos);
-	
-	
-	// for (int j = 0; j < 4; j++)
-	// 	printf("%s\n", tetriminos->grid[j]);
 	ft_place_tetriminos(tetriminos);
 	free(tetriminos);
-	// full_str = read_file(fd);
 }
