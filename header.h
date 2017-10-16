@@ -7,6 +7,8 @@
 
 # include <unistd.h>
 
+# include <fcntl.h>
+
 typedef struct s_tetrimino t_tetrimino;
 
 struct s_tetrimino
