@@ -53,20 +53,22 @@ int			sp_check(char **grid, int y, int x, t_tetrimino t)
 void		restore_grid(char **grid, t_tetrimino t, int x, int y)
 {
 	int		i;
-	int		j;
+	size_t	j;
 	size_t	len;
 
 	i = -1;
+	j = (size_t)x;
 	len = ft_strlen(grid[0]);
 	while (++i < t.ydim) // Iterates only through the square area of the tetrimino. It is impossible to have the tetrimino outside of these dimensions so no need to search there.
 	{
-		j = -1;
-		while (++j < t.xdim)
+		while (j < len)
 		{
-			if (((size_t)x + j < len && (size_t)y + i < len) 
-				&& grid[y + i][x + j] == t.num)
-				grid[y + i][x + j] = '.';
+			if (((size_t)y + i < len) 
+				&& grid[y + i][j] == t.num)
+				grid[y + i][j] = '.';
+			j++;
 		}
+		j = 0;
 	}
 }
 

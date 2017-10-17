@@ -9,6 +9,8 @@
 
 # include <fcntl.h>
 
+#include <stdio.h>
+
 typedef struct s_tetrimino t_tetrimino;
 
 struct s_tetrimino
