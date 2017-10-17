@@ -70,20 +70,7 @@ void			edge_check(char grid[4][5], int i, int j)
 
 void			type_check(int i, int j, t_tetrimino *t)
 {
-	/*
-	....
-	....
-	..##
-	..##
-	*/
-	if (i == 2 && j == 2)
-	{
-		if (t->grid[i + 1][j + 1] == '#' && t->grid[i + 1][j] == '#' &&
-			t->grid[i][j + 1] == '#' && (t->type = 's'))
-			return ;
-		else
-			error_handle();
-	}
+
 	/*
 	#...
 	#...
@@ -108,10 +95,9 @@ void			type_check(int i, int j, t_tetrimino *t)
 			t->grid[i][j + 3] == '#' && (t->type = 'i'))
 			return ;
 	}
-	if (j == 3 || i == 3)
-		error_handle();
-	
-	if (t->grid[i + 1][j + 1] == '#' && t->grid[i + 1][j] == '#' &&
+
+	if (j < 3 && i < 3 && 
+		t->grid[i + 1][j + 1] == '#' && t->grid[i + 1][j] == '#' &&
 		t->grid[i][j + 1] == '#' && (t->type = 's'))
 		return ;
 
@@ -132,9 +118,9 @@ void			type_check(int i, int j, t_tetrimino *t)
 	#... ##..
 	#... .#..
 	*/
-	if (i < 2 && t->grid[i + 1][j] == '#' && t->grid[i + 2][j] == '#' && ((
-			t->grid[i][j + 1] == '#' || t->grid[i + 1][j + 1] == '#' || 
-			t->grid[i + 2][j + 1] == '#') || (j > 0 && (
+	if (i < 2 && t->grid[i + 1][j] == '#' && t->grid[i + 2][j] == '#' && ((j < 3 &&
+			(t->grid[i][j + 1] == '#' || t->grid[i + 1][j + 1] == '#' || 
+			t->grid[i + 2][j + 1] == '#')) || (j > 0 && (
 			t->grid[i + 1][j - 1] == '#' || 
 			t->grid[i + 2][j - 1] == '#'))))
 		return ;
@@ -145,7 +131,8 @@ void			type_check(int i, int j, t_tetrimino *t)
 	.... ....
 	.... ....
 	*/
-	if (t->grid[i][j + 1] == '#' && ((j < 2 && t->grid[i + 1][j + 1] == '#' && 
+	if (j < 3 && i < 3 && 
+		t->grid[i][j + 1] == '#' && ((j < 2 && t->grid[i + 1][j + 1] == '#' && 
 		t->grid[i + 1][j + 2] == '#') || (j > 0 && t->grid[i + 1][j] == '#' &&
 		t->grid[i + 1][j - 1] == '#')))
 		return ;
@@ -156,7 +143,7 @@ void			type_check(int i, int j, t_tetrimino *t)
 	##.. #...
 	.#.. ....
 	*/
-	if (i < 2 && t->grid[i + 1][j] == '#' && ((t->grid[i + 1][j + 1] == '#' && 
+	if (i < 2 && t->grid[i + 1][j] == '#' && ((j < 3 && t->grid[i + 1][j + 1] == '#' && 
 		t->grid[i + 2][j + 1] == '#') || (j > 0 && t->grid[i + 1][j - 1] == '#'
 		&& t->grid[i + 2][j - 1] == '#')))
 		return ;
@@ -168,7 +155,8 @@ void			type_check(int i, int j, t_tetrimino *t)
 	....
 	*/
 
-	if (i < 2 && t->grid[i][j + 1] == '#' && t->grid[i + 1][j + 1] == '#' 
+	if (j < 3 && i < 3 && 
+		i < 2 && t->grid[i][j + 1] == '#' && t->grid[i + 1][j + 1] == '#' 
 		&& t->grid[i + 2][j + 1] == '#')
 		return ;
 
