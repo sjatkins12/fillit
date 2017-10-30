@@ -11,9 +11,9 @@
 
 #include <stdio.h>
 
-typedef struct s_tetrimino t_tetrimino;
+typedef struct s_tetrimino	t_tetrimino;
 
-struct s_tetrimino
+struct 						s_tetrimino
 {
 	char			grid[4][5];
 	char			num;
@@ -23,39 +23,38 @@ struct s_tetrimino
 	t_tetrimino		*next;
 };
 
-void		*ft_memset(void *b, int c, size_t len);
+void						*ft_memset(void *b, int c, size_t len);
 
-void		ft_putchar(char c);
+void						ft_putchar(char c);
 
-void		ft_putstr(char const *s);
+void						ft_putstr(char const *s);
 
-void		ft_putendl(char const *s);
+void						ft_putendl(char const *s);
 
-char		*ft_strncpy(char *dst, const char *src, size_t len);
+char						*ft_strncpy(char *dst, const char *src, size_t len);
 
-char		*ft_strcpy(char *dst, const char *src);
+char						*ft_strcpy(char *dst, const char *src);
 
-char		**ft_alloc_answer_grid(int dimensions, char **old_grid);
+char						**ft_alloc_answer_grid(int dimensions, char **old_grid);
 
-char		**ft_placeable(t_tetrimino *tetrimino, char **answer_grid, int dimensions, int *placeable);
+char						**ft_placeable(t_tetrimino *tetrimino, char **answer_grid, int dimensions, int *placeable);
 
-void		ft_place_tetriminos(t_tetrimino *tetriminos);
+void						ft_place_tetriminos(t_tetrimino *tetriminos);
 
-void		ft_print_answer_grid(char **answer_grid, int dimensions);
+void						ft_print_answer_grid(char **answer_grid, int dimensions);
 
-int			room_check(t_tetrimino t, char **grid, int dimensions);
+int							room_check(t_tetrimino t, char **grid, int dimensions);
 
-size_t		ft_strlen(const char *s);
+size_t						ft_strlen(const char *s);
 
-void		read_file_helper(int a[3], char buffer[5]);
+void						read_file_helper(int a[3], char buffer[5]);
 
-void		type_check_helper(int i, int j, t_tetrimino *t);
+void						type_check_helper(int i, int j, t_tetrimino *t);
 
-void		helper(int a[5], t_tetrimino *t);
+void						helper(int a[5], t_tetrimino *t);
 
-void		error_handle(void);
+void						error_handle(void);
 
-void		check_tetrimino(t_tetrimino *t);
-
+void						check_tetrimino(t_tetrimino *t);
 
 #endif
