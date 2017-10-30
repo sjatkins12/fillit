@@ -27,7 +27,7 @@ int			sp_check(char **grid, int y, int x, t_tetrimino t)
 	size_t		len;
 
 	i = -1;
-	
+
 	set_start_num(&ip, &jp, (size_t)5, (size_t)5);
 	len = ft_strlen(grid[0]);
 	if ((size_t)x + t.xdim > len || (size_t)y + t.ydim > len)

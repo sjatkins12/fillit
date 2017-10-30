@@ -47,4 +47,15 @@ int			room_check(t_tetrimino t, char **grid, int dimensions);
 
 size_t		ft_strlen(const char *s);
 
+void		read_file_helper(int a[3], char buffer[5]);
+
+void		type_check_helper(int i, int j, t_tetrimino *t);
+
+void		helper(int a[5], t_tetrimino *t);
+
+void		error_handle(void);
+
+void		check_tetrimino(t_tetrimino *t);
+
+
 #endif

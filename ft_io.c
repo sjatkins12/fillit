@@ -12,208 +12,75 @@
 
 #include "header.h"
 
-
-void			check_tetrimino(t_tetrimino *t);
-
-void			error_handle()
-{
-	ft_putstr("error\n");
-	exit(0);
-}
-
-
 void			read_file(int fd, t_tetrimino *tetriminos)
 {
 	char		buffer[5];
-	int			ret;
-	int			k;
-	int			i;
+	int			a[3];
 	t_tetrimino	*hold;
 
-	buffer[0] = '\n';
-	k = 0;
-	ret = 1;
-	while (ret == 1 && buffer[0] == '\n' && (i = -1))
+	read_file_helper(a, buffer);
+	while (a[1] == 1 && buffer[0] == '\n' && (a[0] = -1))
 	{
-		while (++i < 4)
+		while (++a[0] < 4)
 		{
-			ret = read(fd, buffer, 5);
-			if (ret != 5 || buffer[4] != '\n')
-				error_handle(); //Bad tetrimino
-			ft_strncpy(tetriminos->grid[i], buffer, 4);
-			tetriminos->grid[i][4] = '\0';
+			a[1] = read(fd, buffer, 5);
+			if (a[1] != 5 || buffer[4] != '\n')
+				error_handle();
+			ft_strncpy(tetriminos->grid[a[0]], buffer, 4);
+			tetriminos->grid[a[0]][4] = '\0';
 		}
-		ret = read(fd, buffer, 1);
-		if (ret == 1 && buffer[0] != '\n')
+		a[1] = read(fd, buffer, 1);
+		if (a[1] == 1 && buffer[0] != '\n')
 			error_handle();
-		tetriminos->num = 'A' + k;
+		tetriminos->num = 'A' + a[2];
 		check_tetrimino(tetriminos);
 		hold = tetriminos++;
 		hold->next = tetriminos;
-		k++;
+		a[2]++;
 	}
 	hold->next = NULL;
 }
 
-void			edge_check(char grid[4][5], int i, int j)
+int				edg_chk(char grid[4][5], int i, int j)
 {
 	if (i > 0 && grid[i - 1][j] == '#')
-		return ;
+		return (1);
 	if (j > 0 && grid[i][j - 1] == '#')
-		return ;
+		return (1);
 	if (j < 3 && grid[i][j + 1] == '#')
-		return ;
+		return (1);
 	if (i < 3 && grid[i + 1][j] == '#')
-		return ;
+		return (1);
 	error_handle();
-}
-
-void			type_check(int i, int j, t_tetrimino *t)
-{
-
-	/*
-	#...
-	#...
-	#...
-	#...
-	*/
-	if (i == 0)
-	{
-		if (t->grid[i + 1][j] == '#' && t->grid[i + 2][j] == '#' && 
-			t->grid[i + 3][j] == '#' && (t->type = 'i'))
-			return ;
-	}
-	/*
-	####
-	....
-	....
-	....
-	*/
-	if (j == 0)
-	{
-		if (t->grid[i][j + 1] == '#' && t->grid[i][j + 2] == '#' && 
-			t->grid[i][j + 3] == '#' && (t->type = 'i'))
-			return ;
-	}
-
-	if (j < 3 && i < 3 && 
-		t->grid[i + 1][j + 1] == '#' && t->grid[i + 1][j] == '#' &&
-		t->grid[i][j + 1] == '#' && (t->type = 's'))
-		return ;
-
-	/*
-	.###
-	.#..->
-	....
-	....
-	*/
-	if (j < 2 && t->grid[i][j + 1] == '#' && t->grid[i][j + 2] == '#' && (
-			t->grid[i + 1][j] == '#' || t->grid[i + 1][j + 1] == '#' || 
-			t->grid[i + 1][j + 2] == '#'))
-		return ;
-
-	/*
-	.... ....
-	##.. .#..
-	#... ##..
-	#... .#..
-	*/
-	if (i < 2 && t->grid[i + 1][j] == '#' && t->grid[i + 2][j] == '#' && ((j < 3 &&
-			(t->grid[i][j + 1] == '#' || t->grid[i + 1][j + 1] == '#' || 
-			t->grid[i + 2][j + 1] == '#')) || (j > 0 && (
-			t->grid[i + 1][j - 1] == '#' || 
-			t->grid[i + 2][j - 1] == '#'))))
-		return ;
-
-	/*
-	.##. .##.
-	..## ##..
-	.... ....
-	.... ....
-	*/
-	if (j < 3 && i < 3 && 
-		t->grid[i][j + 1] == '#' && ((j < 2 && t->grid[i + 1][j + 1] == '#' && 
-		t->grid[i + 1][j + 2] == '#') || (j > 0 && t->grid[i + 1][j] == '#' &&
-		t->grid[i + 1][j - 1] == '#')))
-		return ;
-
-	/*
-	.... .#..
-	#... ##..
-	##.. #...
-	.#.. ....
-	*/
-	if (i < 2 && t->grid[i + 1][j] == '#' && ((j < 3 && t->grid[i + 1][j + 1] == '#' && 
-		t->grid[i + 2][j + 1] == '#') || (j > 0 && t->grid[i + 1][j - 1] == '#'
-		&& t->grid[i + 2][j - 1] == '#')))
-		return ;
-
-	/*
-	..##
-	...#
-	...#
-	....
-	*/
-
-	if (j < 3 && i < 3 && 
-		i < 2 && t->grid[i][j + 1] == '#' && t->grid[i + 1][j + 1] == '#' 
-		&& t->grid[i + 2][j + 1] == '#')
-		return ;
-
-	/*
-	#... .#.. ..#.
-	###. ###. ###.
-	.... .... ....
-	.... .... ....
-	*/
-	if (t->grid[i + 1][j] == '#' && ((j < 2 && t->grid[i + 1][j + 1] == '#'
-		&& t->grid[i + 1][j + 2] == '#') || (j > 0 && 
-		t->grid[i + 1][j - 1] == '#' && t->grid[i + 1][j + 1] == '#') || (j > 1
-		&& t->grid[i + 1][j - 1] == '#' && t->grid[i + 1][j - 2] == '#')))
-		return ;
-	error_handle();	
+	return (0);
 }
 
 void			check_tetrimino(t_tetrimino *t)
-// This is to check to see if valid tetrimino. Also this must set the dimensions of the tetrimino and type if applicable. Size is confirmed. 4x4 with terminating characters
 {
-	int			i;
-	int			j;
-	int			p_count;
-	int			ip;
-	int			jp;
+	int			a[5];
 
-	i = -1;
-	p_count = 0;
+	a[0] = -1;
+	a[1] = 0;
 	t->xdim = 0;
 	t->ydim = 0;
-	while (++i < 4 && (j = -1))
-	{
-		while (++j < 4)
-		{
-			if (t->grid[i][j])
+	while (++a[0] < 4 && (a[2] = -1))
+		while (++a[2] < 4)
+			if (t->grid[a[0]][a[2]])
 			{
-				if (t->grid[i][j] != '#' && t->grid[i][j] != '.')
+				if (t->grid[a[0]][a[2]] != '#' && t->grid[a[0]][a[2]] != '.')
 					error_handle();
-				if (t->grid[i][j] == '#')
+				if (t->grid[a[0]][a[2]] == '#' && edg_chk(t->grid, a[0], a[2]))
 				{
-					edge_check(t->grid, i, j);
-					if (p_count == 0)
-					{
-						type_check(i, j, t);
-						jp = j;
-						ip = i;
-					}
-					if (i - ip + 1 > t->ydim)
-						t->ydim = i - ip + 1;
-					if (j - jp + 1 > t->xdim)
-						t->xdim = j - jp + 1;
-					p_count++;
+					if (a[1] == 0)
+						helper(a, t);
+					if (a[0] - a[3] + 1 > t->ydim)
+						t->ydim = a[0] - a[3] + 1;
+					if (a[2] - a[4] + 1 > t->xdim)
+						t->xdim = a[2] - a[4] + 1;
+					a[1]++;
 				}
 			}
-		}
-	}
-	if (p_count != 4)
+	if (a[1] != 4)
 		error_handle();
 }
 
@@ -229,7 +96,7 @@ int				main(int argc, char **argv)
 	}
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
-		error_handle(); //Give usage
+		error_handle();
 	tetriminos = (t_tetrimino *)malloc(sizeof(t_tetrimino) * 26);
 	read_file(fd, tetriminos);
 	ft_place_tetriminos(tetriminos);

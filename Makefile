@@ -16,7 +16,8 @@ SOURCE = ft_alloc_answer_grid.c \
 		 ft_print_answer_grid.c \
 		 ft_place_tetriminos.c \
 		 ft_placeable.c \
-		 ft_io.c 
+		 ft_io.c  \
+		 helper_funcs.c
 
 
 VPATH = srcs
